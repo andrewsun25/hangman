@@ -1,7 +1,12 @@
 package hangman;
 
 import java.awt.BorderLayout;
+import java.awt.Graphics;
 import java.awt.EventQueue;
+import java.awt.Graphics2D;
+import java.awt.geom.Line2D;
+import javax.swing.SwingUtilities;
+
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -14,12 +19,16 @@ import java.awt.Font;
 import java.awt.Color;
 import javax.swing.JSeparator;
 import javax.swing.JSplitPane;
+import javax.swing.border.LineBorder;
+import javax.swing.JEditorPane;
 
 public class MainDisplay extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField textField;
 	private JTextField textField_1;
+	private JTextField textField_2;
+	private JPanel panel;
 
 	/**
 	 * Launch the application.
@@ -48,25 +57,6 @@ public class MainDisplay extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		StdDraw.setPenRadius(0.07);
-		StdDraw.setPenColor(new Color(234,245,249));
-		StdDraw.filledSquare(0.5, 0.5, 2);
-		Color yellow = new Color(186,158,6);
-		StdDraw.setPenColor(yellow);
-		double headXPos = 0.5;
-		double headYPos = 0.75;
-		StdDraw.filledCircle(headXPos, headYPos, 0.1);
-		// body
-		StdDraw.line(headXPos, headYPos, headXPos, headYPos - 0.5);
-		double bodyYPos = 0.5;
-		// right arm
-		StdDraw.line(headXPos, bodyYPos, headXPos + 0.2, bodyYPos);
-		// left arm
-		StdDraw.line(headXPos, bodyYPos, headXPos - 0.2, bodyYPos);
-		double crotchYPos = 0.25;
-		StdDraw.line(headXPos, crotchYPos, headXPos + 0.2, crotchYPos - 0.2);
-		StdDraw.line(headXPos, crotchYPos, headXPos - 0.2, crotchYPos - 0.2);
-		StdDraw.show(10);
 		
 		JButton btnSaveLoad = new JButton("Save / Load");
 		btnSaveLoad.setBounds(648, 16, 115, 29);
@@ -87,18 +77,38 @@ public class MainDisplay extends JFrame {
 		
 		textField_1 = new JTextField();
 		textField_1.setEditable(false);
-		textField_1.setBounds(433, 206, 319, 187);
+		textField_1.setBounds(431, 158, 319, 187);
 		contentPane.add(textField_1);
 		textField_1.setColumns(10);
 		
 		JLabel lblWrongGuesses = new JLabel("WRONG GUESSES");
 		lblWrongGuesses.setForeground(Color.RED);
 		lblWrongGuesses.setFont(new Font("Tahoma", Font.BOLD, 29));
-		lblWrongGuesses.setBounds(461, 161, 284, 29);
+		lblWrongGuesses.setBounds(460, 126, 284, 29);
 		contentPane.add(lblWrongGuesses);
 		
-		JSeparator separator = new JSeparator();
-		separator.setBounds(223, 162, 1, 2);
-		contentPane.add(separator);
+		textField_2 = new JTextField();
+		textField_2.setEditable(false);
+		textField_2.setBounds(431, 361, 319, 26);
+		contentPane.add(textField_2);
+		textField_2.setColumns(10);
+	
+		panel = new MyPanel();
+		panel.setBounds(35, 16, 367, 377);
+		contentPane.add(panel);
+		
+		
 	}
+	
 }
+
+		class MyPanel extends JPanel {
+			public void paint (Graphics g) {
+				g.setColor(Color.black);
+				g.fillOval(150, 10, 50, 50);
+				g.fillRect(170, 20, 10, 200);
+			}
+			
+			
+		}
+
