@@ -12,6 +12,8 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import java.awt.Font;
 import java.awt.Color;
+import javax.swing.JSeparator;
+import javax.swing.JSplitPane;
 
 public class MainDisplay extends JFrame {
 
@@ -92,7 +94,11 @@ public class MainDisplay extends JFrame {
 		JLabel lblWrongGuesses = new JLabel("WRONG GUESSES");
 		lblWrongGuesses.setForeground(Color.RED);
 		lblWrongGuesses.setFont(new Font("Tahoma", Font.BOLD, 29));
-		lblWrongGuesses.setBounds(461, 170, 284, 20);
+		lblWrongGuesses.setBounds(461, 161, 284, 29);
 		contentPane.add(lblWrongGuesses);
+		
+		JSeparator separator = new JSeparator();
+		separator.setBounds(223, 162, 1, 2);
+		contentPane.add(separator);
 	}
 }
