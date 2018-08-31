@@ -40,6 +40,7 @@ public class MainDisplay extends JFrame {
 	
 	
 	private int currentPartIndex = 0;
+	// visibleParts represent the 6 body parts which can be visible (in order of head, body, left arm, right arm, left leg, right leg).
 	private boolean[] visibleParts = new boolean[]{false, false, false, false, false, false};
 	/**
 	 * Launch the application.
@@ -60,15 +61,16 @@ public class MainDisplay extends JFrame {
 		
 		GameManager gameManager = new GameManager();
 		while(!gameManager.isGameOver()) {
+			// Whenever the user presses the input button, frame.hasNewInput becomes true.
 			if(frame.hasNewInput) {
 				String input = frame.getInput();
 				if(input.length() == 1) {
 					System.out.println("Secret word: " + gameManager.getGameState().secretWord);
 					ArrayList<Integer> matchedIndices = gameManager.guessLetter(input.charAt(0));
-					// If there is no match, no guessed incorrectly. 
+					// If our guess is incorrect
 					if(matchedIndices.size() == 0) {
 						System.out.println("Incorrect Letter: " + input);
-						frame.addBodyPart();
+						frame.addBodyPart(); // makes a body part visible
 						frame.graphicsPanel.repaint();
 					}
 				}
@@ -85,12 +87,10 @@ public class MainDisplay extends JFrame {
 	public MainDisplay() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 800, 465);
-//		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
-//		JButton btnSaveLoad = new JButton("Save / Load");
 		btnSaveLoad.setBounds(648, 16, 115, 29);
 		contentPane.add(btnSaveLoad);
 
@@ -101,7 +101,6 @@ public class MainDisplay extends JFrame {
 		contentPane.add(lblYourGuess);
 
 		// input field
-//		inputField = new JTextField();
 		inputField.setFont(new Font("Tahoma", Font.PLAIN, 29));
 		inputField.setHorizontalAlignment(SwingConstants.CENTER);
 		inputField.setBounds(679, 75, 49, 39);
@@ -114,7 +113,6 @@ public class MainDisplay extends JFrame {
 		{
 			  public void actionPerformed(ActionEvent e)
 			  {
-			    // display/center the jdialog when the button is pressed
 				  hasNewInput = true;
 			  }
 			});
@@ -132,13 +130,13 @@ public class MainDisplay extends JFrame {
 		lblWrongGuesses.setBounds(460, 126, 284, 29);
 		contentPane.add(lblWrongGuesses);
 
+		// secret word
 		JTextField textField_2 = new JTextField();
 		textField_2.setEditable(false);
 		textField_2.setBounds(431, 361, 319, 26);
 		contentPane.add(textField_2);
 		textField_2.setColumns(10);
 
-//		graphicsPanel = new MyPanel();
 		graphicsPanel.setBounds(35, 16, 367, 377);
 		contentPane.add(graphicsPanel);
 
@@ -155,13 +153,6 @@ public class MainDisplay extends JFrame {
 	}
 	
 	class MyPanel extends JPanel {
-//		private boolean isHeadVisible = false;
-//		private boolean isBodyVisible = false;
-//		private boolean isLeftArmVisible = false;
-//		private boolean isRightArmVisible = false;
-//		private boolean isLeftLegVisible = false;
-//		private boolean isRightLegVisible = false;
-		
 		
 		public void paint(Graphics g) {
 			super.paint(g);
