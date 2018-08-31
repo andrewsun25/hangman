@@ -86,7 +86,7 @@ public class MainDisplay extends JFrame {
 	 */
 	public MainDisplay() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 800, 465);
+		setBounds(100, 100, 900, 465);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
@@ -130,7 +130,8 @@ public class MainDisplay extends JFrame {
 		lblWrongGuesses.setBounds(460, 126, 284, 29);
 		contentPane.add(lblWrongGuesses);
 
-		// secret word
+		// secret word and info on the guess
+		// ex: if choose a previously guessed letter then display "you have already guessed  this letter"
 		JTextField textField_2 = new JTextField();
 		textField_2.setEditable(false);
 		textField_2.setBounds(431, 361, 319, 26);
