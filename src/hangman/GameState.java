@@ -8,6 +8,7 @@ import java.util.ArrayList;
  *
  */
 public class GameState implements java.io.Serializable {
+	private static final long serialVersionUID = 1L;
 	/**
 	 * Default value in an empty char[] array
 	 */
@@ -114,4 +115,65 @@ public class GameState implements java.io.Serializable {
 			secretWordArray[index] = letter;
 		}
 	}
+	
+	public boolean equals(Object o) 
+	{
+	    if (o == this) 
+	    {
+	      return true;
+	    }
+	    if (!(o instanceof GameState)) 
+	    {
+	      return false;
+	    }
+	    GameState gs = (GameState)o;
+	    // Check that the secret words match
+	    if (!gs.secretWord.equals(this.secretWord))
+	    {
+	    	return false;
+	    }
+	    
+	    // This check might be redundant
+	    if (gs.secretWordArray.length != this.secretWordArray.length)
+	    {
+	    	return false;
+	    }
+	    
+	    // Check that the state of the secret word array is the same for each index
+	    for (int i=0; i<gs.secretWordArray.length; i++)
+	    {
+	    	if (gs.secretWordArray[i] != this.secretWordArray[i])
+	    	{
+	    		return false;
+	    	}
+	    }
+	    
+	    // Check that the the number of letters guessed match
+	    if (gs.guessedLetters.size() != this.guessedLetters.size())
+	    {
+	    	return false;
+	    }
+	    
+	    // Check that each guessed letter is the same
+	    for (int i=0; i<gs.guessedLetters.size(); i++)
+	    {
+	    	if (!gs.guessedLetters.get(i).equals(this.guessedLetters.get(i)))
+	    	{
+	    		return false;
+	    	}
+	    }
+	    
+	    // Check that the number of wrong guesses match
+	    if (gs.numWrongGuesses != this.numWrongGuesses) 
+	    {
+	    	return false;
+	    }
+	    
+	    if (gs.numCorrectGuesses != this.numCorrectGuesses)
+	    {
+	    	return false;
+	    }
+	    
+	    return true;
+	  }
 }

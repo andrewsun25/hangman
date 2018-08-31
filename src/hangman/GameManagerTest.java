@@ -330,21 +330,53 @@ class GameManagerTest {
 	}
 	
 	@Test
-	void loadGameFromObjTest()
+	void loadAndSaveGameFromFileTest()
 	{
-		// TODO
-	}
+		// Create a new default game manager
+		GameManager gmOrig = new GameManager();
+								
+		// Manually set the secret word
+		gmOrig.gameState.setSecretWord("engineering");
+						
+		// Guess some correct letters
+		gmOrig.guessLetter('e');
+		gmOrig.guessLetter('n');
+		gmOrig.guessLetter('g');
+				
+		// Guess some wrong letters
+		gmOrig.guessLetter('x');
+		gmOrig.guessLetter('y');
+				
+		// Guess another right letter
+		gmOrig.guessLetter('r');
 	
-	@Test
-	void loadGameFromFileTest()
-	{
-		// TODO
-	}
-	
-	@Test
-	void saveGameTest()
-	{
-		// TODO
-	}
+		File file = null;
+		try
+		{
+			// Save the game to a temp file
+			file = File.createTempFile("game", ".txt");	
+			gmOrig.saveAs(file.getAbsolutePath());
+			
+			// Load the game to a new game manager
+			GameManager gmNew = new GameManager();
+			gmNew.loadGame(file.getAbsolutePath());
+			
+			// Verify all fields are the same
+			GameState gsO = gmOrig.getGameState();
+			GameState gsN = gmNew.getGameState();
+			assertEquals(gsO, gsN);
 
+		}
+		catch (Exception e)
+		{
+			fail("Unable to create a temp file to test game save/load method.");
+		}
+		finally
+		{
+			if (file != null)
+			{
+				file.delete();
+			}
+		}
+	}
 }

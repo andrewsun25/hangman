@@ -1,7 +1,11 @@
 package hangman;
 
 import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.FileReader;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -215,7 +219,25 @@ public class GameManager {
 	 */
 	public void loadGame(String filePath)
 	{
-		// TODO: Load a game state from a file
+		try
+        {   
+            // Reading the object from a file
+            FileInputStream file = new FileInputStream(filePath);
+            ObjectInputStream in = new ObjectInputStream(file);
+             
+            // Method for deserialization of object
+            loadGame((GameState)in.readObject());
+             
+            in.close();
+            file.close();
+             
+            System.out.printf("The game was succesfully loaded from %s\n", filePath);
+        }
+         
+        catch(Exception e)
+        {
+            System.out.printf("There was an error loading the game. %s\n", e.getMessage());
+        }
 	}
 	
 	/**
@@ -224,6 +246,23 @@ public class GameManager {
 	 */
 	public void saveAs(String filePath)
 	{
-		// TODO: Save a game state to a file
+		try
+		{
+			//Saving of object in a file
+            FileOutputStream file = new FileOutputStream(filePath);
+            ObjectOutputStream out = new ObjectOutputStream(file);
+             
+            // Method for serialization of object
+            out.writeObject(gameState);
+             
+            out.close();
+            file.close();
+            
+            System.out.printf("Game succesfully saved to %s\n", filePath);
+		}
+		catch (Exception e)
+		{
+			System.out.printf("There was an error saving this game. %s\f", e.getMessage());
+		}
 	}
 }
