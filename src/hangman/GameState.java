@@ -12,12 +12,20 @@ public class GameState implements java.io.Serializable {
 	/**
 	 * Default value in an empty char[] array
 	 */
-	static transient char NULL_CHAR = '\u0000';
-	public String secretWord;
-	public char[] secretWordArray; // To be filled by correct letter guesses
-	public ArrayList<Character> guessedLetters;
-	public int numWrongGuesses;
-	public int numCorrectGuesses;
+	public static final transient char NULL_CHAR = '\u0000';
+	private String secretWord;
+	private char[] secretWordArray; // To be filled by correct letter guesses
+	private ArrayList<Character> guessedLetters;
+	private int numWrongGuesses;
+	private int numCorrectGuesses;
+	
+	/**
+	 * Initializes an empty game state for hangman.
+	 */
+	public GameState()
+	{
+		
+	}
 	
 	/**
 	 * Gets the current secret word.

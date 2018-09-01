@@ -1,0 +1,113 @@
+<Project>
+  <Name>CSE 437S Assignment 1</Name>
+  <ProjectItem type="NClass.DiagramEditor.ClassDiagram.Diagram" assembly="NClass.DiagramEditor, Version=2.4.1823.0, Culture=neutral, PublicKeyToken=null">
+    <Name>Hangman</Name>
+    <Language>CSharp</Language>
+    <Entities>
+      <Entity type="Class">
+        <Name>GameManager</Name>
+        <Access>Public</Access>
+        <Location left="254" top="24" />
+        <Size width="287" height="400" />
+        <Collapsed>False</Collapsed>
+        <Member type="Field">private static int numAllowedGuesses = 6</Member>
+        <Member type="Field">private String wordListPath = word_list.txt</Member>
+        <Member type="Field">private int wordList</Member>
+        <Member type="Field">private GameState gameState</Member>
+        <Member type="Constructor">public GameManager()</Member>
+        <Member type="Constructor">public GameManager(String wordList)</Member>
+        <Member type="Constructor">public GameManager(GameState game)</Member>
+        <Member type="Method">public GameState getGameState()</Member>
+        <Member type="Method">public ArrayList&lt;String&gt; getWordList()</Member>
+        <Member type="Method">public void setWordList(ArrayList&lt;string&gt; wordList)</Member>
+        <Member type="Method">public void setWordList(String filePath)</Member>
+        <Member type="Method">private void generateDefaultWordList()</Member>
+        <Member type="Method">public void startNewGame()</Member>
+        <Member type="Method">public ArrayList&lt;Integer&gt; guessLetter(char guess)</Member>
+        <Member type="Method">public Boolean isGameOver()</Member>
+        <Member type="Method">public Boolean didWin()</Member>
+        <Member type="Method">public void loadGame(GameState game)</Member>
+        <Member type="Method">public void loadGame(string filePath)</Member>
+        <Member type="Method">public void saveAs(string filePath)</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>GameState</Name>
+        <Access>Public</Access>
+        <Location left="604" top="348" />
+        <Size width="302" height="383" />
+        <Collapsed>False</Collapsed>
+        <Member type="Field">public static readonly char NULL_CHAR = \u0000</Member>
+        <Member type="Field">private String secretWord</Member>
+        <Member type="Field">private char[] secretWordArray</Member>
+        <Member type="Field">private ArrayList&lt;char&gt; guessedLetters</Member>
+        <Member type="Field">private int numWrongGuesses</Member>
+        <Member type="Field">private int numCorrectGuesses</Member>
+        <Member type="Constructor">public GameState()</Member>
+        <Member type="Method">public String getSecretWord()</Member>
+        <Member type="Method">public void setSecretWord()</Member>
+        <Member type="Method">public int getNumWrongGuesses()</Member>
+        <Member type="Method">public void incrementNumWrongGuesses()</Member>
+        <Member type="Method">public int getNumCorrectGuesses()</Member>
+        <Member type="Method">public void incrementNumCorrectGuesses()</Member>
+        <Member type="Method">public ArrayList&lt;Character&gt; getGuessedLetters()</Member>
+        <Member type="Method">public void addGuessedLetter(char letter)</Member>
+        <Member type="Method">public char[] getWordState()</Member>
+        <Member type="Method">public void setLetter(int index, char letter)</Member>
+        <Member type="Method">public override Boolean equals(Object o)</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>MainDisplay</Name>
+        <Access>Public</Access>
+        <Location left="604" top="24" />
+        <Size width="299" height="281" />
+        <Collapsed>False</Collapsed>
+        <Member type="Field">public String getInput</Member>
+        <Member type="Field">private JTextField inputField</Member>
+        <Member type="Field">private JButton inputButton</Member>
+        <Member type="Field">private JTextField wrongWordsBank</Member>
+        <Member type="Field">private JPanel graphicsPanel</Member>
+        <Member type="Field">private JButton btnSaveLoad</Member>
+        <Member type="Field">public Boolean hasNewInput</Member>
+        <Member type="Field">private int currentPartIndex</Member>
+        <Member type="Field">private boolean[] visibleParts</Member>
+        <Member type="Method">public static void main()</Member>
+        <Member type="Constructor">public MainDisplay()</Member>
+        <Member type="Method">public void addBodyPart()</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>MyPanel</Name>
+        <Access>Public</Access>
+        <Location left="971" top="102" />
+        <Size width="162" height="128" />
+        <Collapsed>False</Collapsed>
+        <Member type="Method">public void paint()</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+    </Entities>
+    <Relationships>
+      <Relationship type="Dependency" first="2" second="0">
+        <Label>
+        </Label>
+        <StartOrientation>Horizontal</StartOrientation>
+        <EndOrientation>Horizontal</EndOrientation>
+      </Relationship>
+      <Relationship type="Dependency" first="2" second="3">
+        <Label>
+        </Label>
+        <StartOrientation>Horizontal</StartOrientation>
+        <EndOrientation>Horizontal</EndOrientation>
+      </Relationship>
+      <Relationship type="Association" first="0" second="1">
+        <Label>
+        </Label>
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Horizontal</EndOrientation>
+        <Direction>Unidirectional</Direction>
+        <AssociationType>Association</AssociationType>
+      </Relationship>
+    </Relationships>
+  </ProjectItem>
+</Project>
