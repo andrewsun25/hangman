@@ -17,7 +17,7 @@ class GameManagerTest {
 		GameManager gm = new GameManager();
 		
 		// Test that there are 43 words in the word list
-		assertEquals(50, gm.wordList.size());
+		assertEquals(50, gm.getWordList().size());
 	}
 	
 	@Test
@@ -39,15 +39,15 @@ class GameManagerTest {
 			
 			// Parse the words
 			GameManager gm = new GameManager();
-			gm.parseWordList(file.getAbsolutePath());
+			gm.setWordList(file.getAbsolutePath());
 			
 			// Assert that the size is correct and all expected words are in the list
-			assertEquals(5, gm.wordList.size());
-			assertEquals("word1", gm.wordList.get(0));
-			assertEquals("wordwordword2", gm.wordList.get(1));
-			assertEquals("thisIsATest", gm.wordList.get(2));
-			assertEquals("cOmPuTeR", gm.wordList.get(3));
-			assertEquals("veryveryveryveryLooooong", gm.wordList.get(4));
+			assertEquals(5, gm.getWordList().size());
+			assertEquals("word1", gm.getWordList().get(0));
+			assertEquals("wordwordword2", gm.getWordList().get(1));
+			assertEquals("thisIsATest", gm.getWordList().get(2));
+			assertEquals("cOmPuTeR", gm.getWordList().get(3));
+			assertEquals("veryveryveryveryLooooong", gm.getWordList().get(4));
 			
 			// Clean up
 			file.delete();
@@ -66,27 +66,27 @@ class GameManagerTest {
 	boolean isDefaultWordList(GameManager gm)
 	{
 		boolean isDefault = true;
-		if (gm.wordList.size() != 5)
+		if (gm.getWordList().size() != 5)
 		{
 			isDefault = false;
 		}
-		if ("engineering".equalsIgnoreCase(gm.wordList.get(0)) != true)
+		if ("engineering".equalsIgnoreCase(gm.getWordList().get(0)) != true)
 		{
 			isDefault = false;
 		}
-		if ("computer".equalsIgnoreCase(gm.wordList.get(1)) != true)
+		if ("computer".equalsIgnoreCase(gm.getWordList().get(1)) != true)
 		{
 			isDefault = false;
 		}
-		if ("science".equalsIgnoreCase(gm.wordList.get(2)) != true)
+		if ("science".equalsIgnoreCase(gm.getWordList().get(2)) != true)
 		{
 			isDefault = false;
 		}
-		if ("programming".equalsIgnoreCase(gm.wordList.get(3)) != true)
+		if ("programming".equalsIgnoreCase(gm.getWordList().get(3)) != true)
 		{
 			isDefault = false;
 		}
-		if ("bugs".equalsIgnoreCase(gm.wordList.get(4)) != true)
+		if ("bugs".equalsIgnoreCase(gm.getWordList().get(4)) != true)
 		{
 			isDefault = false;
 		}
@@ -103,7 +103,7 @@ class GameManagerTest {
 			
 			// Parse the words
 			GameManager gm = new GameManager();
-			gm.parseWordList(file.getAbsolutePath());
+			gm.setWordList(file.getAbsolutePath());
 			
 			// Assert that the default word list was used instead
 			assertTrue(isDefaultWordList(gm));
@@ -122,18 +122,10 @@ class GameManagerTest {
 	{
 		// Parse the words from a file that doesn't exit
 		GameManager gm = new GameManager();
-		gm.parseWordList("C:\\fake\\path\\word.txt");
+		gm.setWordList("C:\\fake\\path\\word.txt");
 						
 		// Assert that the default word list was used instead
 		assertTrue(isDefaultWordList(gm));
-	}
-	
-	@Test
-	void generateDefaultWordListTest()
-	{
-		GameManager gm = new GameManager();
-		gm.generateDefaultWordList();
-		assertTrue(isDefaultWordList(gm));		
 	}
 	
 	@Test
@@ -143,7 +135,7 @@ class GameManagerTest {
 		GameManager gm = new GameManager();
 		
 		// Manually set the secret word
-		gm.gameState.setSecretWord("engineering");
+		gm.getGameState().setSecretWord("engineering");
 		
 		// Guess an incorrect letter
 		ArrayList<Integer> temp = gm.guessLetter('x');
@@ -152,13 +144,13 @@ class GameManagerTest {
 		assertEquals(0, temp.size());
 		
 		// Test that the incorrect number of wrong guesses was incremented
-		assertEquals(1, gm.gameState.getNumWrongGuesses());
+		assertEquals(1, gm.getGameState().getNumWrongGuesses());
 		
 		// Test that the number of correct guesses is still 0
-		assertEquals(0, gm.gameState.getNumCorrectGuesses());
+		assertEquals(0, gm.getGameState().getNumCorrectGuesses());
 		
 		// Test that the guessed letters list contains 'x'
-		assertTrue(gm.gameState.getGuessedLetters().contains('x'));
+		assertTrue(gm.getGameState().getGuessedLetters().contains('x'));
 	}
 	
 	@Test
@@ -168,7 +160,7 @@ class GameManagerTest {
 		GameManager gm = new GameManager();
 		
 		// Manually set the secret word
-		gm.gameState.setSecretWord("engineering");
+		gm.getGameState().setSecretWord("engineering");
 		
 		// Guess an correct letter
 		ArrayList<Integer> temp = gm.guessLetter('e');
@@ -182,16 +174,16 @@ class GameManagerTest {
 		assertTrue(temp.contains(6));
 		
 		// Test that the incorrect number of wrong guesses is still 0
-		assertEquals(0, gm.gameState.getNumWrongGuesses());
+		assertEquals(0, gm.getGameState().getNumWrongGuesses());
 		
 		// Test that the number of correct guesses was incremented
-		assertEquals(1, gm.gameState.getNumCorrectGuesses());
+		assertEquals(1, gm.getGameState().getNumCorrectGuesses());
 		
 		// Test that the guessed letters list contains 'e'
-		assertTrue(gm.gameState.getGuessedLetters().contains('e'));
+		assertTrue(gm.getGameState().getGuessedLetters().contains('e'));
 		
 		// Test that the word state is e _ _ _ _ e e _ _ _ _
-		char[] wordState = gm.gameState.getWordState();
+		char[] wordState = gm.getGameState().getWordState();
 		assertEquals('e', wordState[0]);
 		assertEquals(GameState.NULL_CHAR, wordState[1]);
 		assertEquals(GameState.NULL_CHAR, wordState[2]);
@@ -212,7 +204,7 @@ class GameManagerTest {
 		GameManager gm = new GameManager();
 		
 		// Manually set the secret word
-		gm.gameState.setSecretWord("engineering");
+		gm.getGameState().setSecretWord("engineering");
 		
 		// Guess an incorrect letter 6 times
 		gm.guessLetter('x');
@@ -223,18 +215,18 @@ class GameManagerTest {
 		gm.guessLetter('d');
 		
 		// Test that the incorrect number of wrong guesses is now 6
-		assertEquals(6, gm.gameState.getNumWrongGuesses());
+		assertEquals(6, gm.getGameState().getNumWrongGuesses());
 				
 		// Test that the number of correct guesses is 0
-		assertEquals(0, gm.gameState.getNumCorrectGuesses());
+		assertEquals(0, gm.getGameState().getNumCorrectGuesses());
 		
 		// Test that the guessed letters list contains x, y, z, v, p, and d
-		assertTrue(gm.gameState.getGuessedLetters().contains('x'));
-		assertTrue(gm.gameState.getGuessedLetters().contains('y'));
-		assertTrue(gm.gameState.getGuessedLetters().contains('z'));
-		assertTrue(gm.gameState.getGuessedLetters().contains('v'));
-		assertTrue(gm.gameState.getGuessedLetters().contains('p'));
-		assertTrue(gm.gameState.getGuessedLetters().contains('d'));
+		assertTrue(gm.getGameState().getGuessedLetters().contains('x'));
+		assertTrue(gm.getGameState().getGuessedLetters().contains('y'));
+		assertTrue(gm.getGameState().getGuessedLetters().contains('z'));
+		assertTrue(gm.getGameState().getGuessedLetters().contains('v'));
+		assertTrue(gm.getGameState().getGuessedLetters().contains('p'));
+		assertTrue(gm.getGameState().getGuessedLetters().contains('d'));
 		
 		// Test that the game is over
 		assertTrue(gm.isGameOver());
@@ -250,7 +242,7 @@ class GameManagerTest {
 		GameManager gm = new GameManager();
 				
 		// Manually set the secret word
-		gm.gameState.setSecretWord("engineering");
+		gm.getGameState().setSecretWord("engineering");
 				
 	    // Guess the correct letters
 		gm.guessLetter('e');
@@ -260,17 +252,17 @@ class GameManagerTest {
 		gm.guessLetter('r');
 				
 		// Test that the incorrect number of wrong guesses is 0
-		assertEquals(0, gm.gameState.getNumWrongGuesses());
+		assertEquals(0, gm.getGameState().getNumWrongGuesses());
 						
 		// Test that the number of correct guesses is 5
-		assertEquals(5, gm.gameState.getNumCorrectGuesses());
+		assertEquals(5, gm.getGameState().getNumCorrectGuesses());
 			
 		// Test that the guessed letters list contains e, n, g, i ,r
-		assertTrue(gm.gameState.getGuessedLetters().contains('e'));
-		assertTrue(gm.gameState.getGuessedLetters().contains('n'));
-		assertTrue(gm.gameState.getGuessedLetters().contains('g'));
-		assertTrue(gm.gameState.getGuessedLetters().contains('i'));
-		assertTrue(gm.gameState.getGuessedLetters().contains('r'));
+		assertTrue(gm.getGameState().getGuessedLetters().contains('e'));
+		assertTrue(gm.getGameState().getGuessedLetters().contains('n'));
+		assertTrue(gm.getGameState().getGuessedLetters().contains('g'));
+		assertTrue(gm.getGameState().getGuessedLetters().contains('i'));
+		assertTrue(gm.getGameState().getGuessedLetters().contains('r'));
 				
 		// Test that the game is over
 		assertTrue(gm.isGameOver());
@@ -287,7 +279,7 @@ class GameManagerTest {
 		GameManager gm = new GameManager();
 						
 		// Manually set the secret word
-		gm.gameState.setSecretWord("engineering");
+		gm.getGameState().setSecretWord("engineering");
 						
 		// Guess some correct letters
 		gm.guessLetter('e');
@@ -302,26 +294,26 @@ class GameManagerTest {
 		gm.guessLetter('r');
 		
 		// Test that the incorrect number of wrong guesses is 2
-		assertEquals(2, gm.gameState.getNumWrongGuesses());
+		assertEquals(2, gm.getGameState().getNumWrongGuesses());
 								
 		// Test that the number of correct guesses is 4
-		assertEquals(4, gm.gameState.getNumCorrectGuesses());
+		assertEquals(4, gm.getGameState().getNumCorrectGuesses());
 		
 		// Get bored and decide to start a new game...
 		gm.startNewGame();
 		
 		// Manually set the secret word again
-		gm.gameState.setSecretWord("bugs");
+		gm.getGameState().setSecretWord("bugs");
 		
 		// Test that number of guesses have been reset to 0
-		assertEquals(0, gm.gameState.getNumWrongGuesses());
-		assertEquals(0, gm.gameState.getNumCorrectGuesses());
+		assertEquals(0, gm.getGameState().getNumWrongGuesses());
+		assertEquals(0, gm.getGameState().getNumCorrectGuesses());
 		
 		// Test that guessed letters list is empty
-		assertEquals(0, gm.gameState.getGuessedLetters().size());
+		assertEquals(0, gm.getGameState().getGuessedLetters().size());
 		
 		// Test that word state is _ _ _ _
-		char[] wordState = gm.gameState.getWordState();
+		char[] wordState = gm.getGameState().getWordState();
 		assertEquals(4, wordState.length);
 		assertEquals(GameState.NULL_CHAR, wordState[0]);
 		assertEquals(GameState.NULL_CHAR, wordState[1]);
@@ -336,7 +328,7 @@ class GameManagerTest {
 		GameManager gmOrig = new GameManager();
 								
 		// Manually set the secret word
-		gmOrig.gameState.setSecretWord("engineering");
+		gmOrig.getGameState().setSecretWord("engineering");
 						
 		// Guess some correct letters
 		gmOrig.guessLetter('e');

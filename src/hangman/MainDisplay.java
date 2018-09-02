@@ -65,7 +65,7 @@ public class MainDisplay extends JFrame {
 			if(frame.hasNewInput) {
 				String input = frame.getInput();
 				if(input.length() == 1) {
-					System.out.println("Secret word: " + gameManager.getGameState().secretWord);
+					System.out.println("Secret word: " + gameManager.getGameState().getSecretWord());
 					ArrayList<Integer> matchedIndices = gameManager.guessLetter(input.charAt(0));
 					// If our guess is incorrect
 					if(matchedIndices.size() == 0) {

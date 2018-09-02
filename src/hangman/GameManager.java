@@ -15,17 +15,17 @@ import java.util.Random;
  *
  */
 public class GameManager {
-	static int numAllowedGuesses = 6;
-	String wordListPath = "word_list.txt";
-	ArrayList<String> wordList;
-	GameState gameState;
+	private static int numAllowedGuesses = 6;
+	private String wordListPath = "word_list.txt";
+	private ArrayList<String> wordList;
+	private GameState gameState;
 	
 	/**
 	 * Initializes a new GameManager object.
 	 */
 	public GameManager()
 	{
-		parseWordList(wordListPath);
+		setWordList(wordListPath);
 		gameState = new GameState();
 		startNewGame();
 	}
@@ -36,19 +36,46 @@ public class GameManager {
 	 */
 	public GameManager(String wordList)
 	{
-		parseWordList(wordList);
+		setWordList(wordList);
 		gameState = new GameState();
 		startNewGame();
 	}
 	
 	/**
 	 * Initializes a new GameManager object with the provided game state.
-	 * @param state The game state to set as the current game.
+	 * @param game The game state to set as the current game.
 	 */
-	public GameManager(GameState state)
+	public GameManager(GameState game)
 	{
-		parseWordList(wordListPath);
-		loadGame(gameState);
+		setWordList(wordListPath);
+		loadGame(game);
+	}
+	
+	/**
+	 * Gets the current game state.
+	 * @return The current game state.
+	 */
+	public GameState getGameState()
+	{
+		return gameState;
+	}
+	
+	/**
+	 * Gets the list of words being used for the game.
+	 * @return An ArrayList of words for hangman.
+	 */
+	public ArrayList<String> getWordList()
+	{
+		return wordList;
+	}
+	
+	/**
+	 * Sets the word list to pull new words from for the game.
+	 * @param wordList A list of words (one word per index).
+	 */
+	public void setWordList(ArrayList<String> wordList)
+	{
+		this.wordList = wordList;
 	}
 	
 	/**
@@ -56,7 +83,7 @@ public class GameManager {
 	 * The word list must be in the format of one word per line.
 	 * @param filePath The file path to the word list.
 	 */
-	void parseWordList(String filePath)
+	public void setWordList(String filePath)
 	{
 		wordList = new ArrayList<String>();
 		
@@ -88,7 +115,7 @@ public class GameManager {
 	 * Generate a small default word list in case a word list
 	 * text file is not provided or is invalid.
 	 */
-	void generateDefaultWordList()
+	private void generateDefaultWordList()
 	{
 		wordList = new ArrayList<String>();
 		wordList.add("engineering");
@@ -117,9 +144,7 @@ public class GameManager {
 	/**
 	 * Guess a letter and update the game state.
 	 * @param guess The letter to guess
-	 * @return An array list of indexes where the letter matched in the secret word.
-	 * A size of 0 means no matches
-	 * were found.
+	 * @return An array list of indexes where the letter matched in the secret word. A size of 0 means no matches were found.
 	 */
 	public ArrayList<Integer> guessLetter(char guess)
 	{
@@ -163,15 +188,6 @@ public class GameManager {
 	}
 	
 	/**
-	 * Gets the current game state.
-	 * @return The current game state.
-	 */
-	public GameState getGameState()
-	{
-		return gameState;
-	}
-	
-	/**
 	 * Gets whether the game is over or not.
 	 * @return True if the game is over, false otherwise.
 	 */
@@ -206,11 +222,11 @@ public class GameManager {
 	
 	/**
 	 * Load a game state from a game state object.
-	 * @param state The game state to load.
+	 * @param game The game state to load.
 	 */
-	public void loadGame(GameState state)
+	public void loadGame(GameState game)
 	{
-		gameState = state;
+		gameState = game;
 	}
 	
 	/**
