@@ -180,6 +180,8 @@ public class MainDisplay extends JFrame {
 				g2d.fillRect(70, 220, 100, 10);
 			}
 			if(visibleParts[5]) {
+				
+				
 				g2d.fillRect(170, 220, 100, 10);
 				
 				g2d.fillRect(0, 0, this.getWidth(), this.getHeight());
