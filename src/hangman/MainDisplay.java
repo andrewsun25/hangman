@@ -70,6 +70,7 @@ public class MainDisplay extends JFrame {
 					// If our guess is incorrect
 					if(matchedIndices.size() == 0) {
 						System.out.println("Incorrect Letter: " + input);
+						frame.addWrongChar(input.charAt(0));
 						frame.addBodyPart(); // makes a body part visible
 						frame.graphicsPanel.repaint();
 					}
@@ -121,6 +122,8 @@ public class MainDisplay extends JFrame {
 		// wrongWordsBank
 		wrongWordsBank.setEditable(false);
 		wrongWordsBank.setBounds(431, 158, 319, 187);
+		wrongWordsBank.setForeground(Color.RED);
+		wrongWordsBank.setFont(new Font("Tahoma", Font.BOLD, 29));
 		contentPane.add(wrongWordsBank);
 		wrongWordsBank.setColumns(10);
 
@@ -147,7 +150,9 @@ public class MainDisplay extends JFrame {
 		return inputField.getText();
 	}
 	
-	
+	public void addWrongChar(char c) {
+		wrongWordsBank.setText(wrongWordsBank.getText()+c+", ");
+	}
 	
 	public void addBodyPart() {
 		visibleParts[currentPartIndex++] = true;
@@ -155,14 +160,41 @@ public class MainDisplay extends JFrame {
 	
 	class MyPanel extends JPanel {
 		
-		public void paint(Graphics g) {
-			super.paint(g);
-			g.setColor(Color.black);
+		public void paintComponent(Graphics g) {
+			super.paintComponent(g);
+			Graphics2D g2d = (Graphics2D)g;
+			g2d.setColor(Color.black);
 			if(visibleParts[0]) {
-				g.fillOval(150, 10, 50, 50);
+				g2d.fillOval(150, 10, 50, 50);
 			}
 			if(visibleParts[1]) {
-				g.fillRect(170, 20, 10, 200);
+				g2d.fillRect(170, 20, 10, 200);
+			}
+			if(visibleParts[2]) {
+				g2d.fillRect(70, 100, 100, 10);
+			}
+			if(visibleParts[3]) {
+				g2d.fillRect(170, 100, 100, 10);
+			}
+			if(visibleParts[4]) {
+				g2d.fillRect(70, 220, 100, 10);
+			}
+			if(visibleParts[5]) {
+				g2d.fillRect(170, 220, 100, 10);
+				
+				g2d.fillRect(0, 0, this.getWidth(), this.getHeight());
+				g2d.setFont(new Font("Tahoma", Font.BOLD, 29));
+				for(int i = 0; i < 100; i++) {
+					g2d.setColor(Color.RED);
+					g2d.drawString("YOU LOSE", this.getWidth() / 6, this.getHeight() / 6);
+					
+					g2d.setColor(Color.BLUE);
+					g2d.drawString("YOU LOSE", this.getWidth() / 2, this.getHeight() / 2);
+				
+					g2d.setColor(Color.WHITE);
+					g2d.drawString("YOU LOSE", this.getWidth() / 4, this.getHeight() / 4);
+				}
+				
 			}
 		}
 
