@@ -37,38 +37,39 @@ public class MainDisplay extends JFrame {
 	private JPanel graphicsPanel = new MyPanel(); // MyPanel Object
 	private JButton btnSaveLoad = new JButton("Save / Load");
 	public boolean hasNewInput = false;
-	
-	
+
 	private int currentPartIndex = 0;
-	// visibleParts represent the 6 body parts which can be visible (in order of head, body, left arm, right arm, left leg, right leg).
-	private boolean[] visibleParts = new boolean[]{false, false, false, false, false, false};
+	// visibleParts represent the 6 body parts which can be visible (in order of
+	// head, body, left arm, right arm, left leg, right leg).
+	private boolean[] visibleParts = new boolean[] { false, false, false, false, false, false };
+
 	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
 		MainDisplay frame = new MainDisplay();
-;
+		;
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
 					frame.setVisible(true);
-					
+
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
 			}
 		});
-		
+
 		GameManager gameManager = new GameManager();
-		while(!gameManager.isGameOver()) {
+		while (!gameManager.isGameOver()) {
 			// Whenever the user presses the input button, frame.hasNewInput becomes true.
-			if(frame.hasNewInput) {
+			if (frame.hasNewInput) {
 				String input = frame.getInput();
-				if(input.length() == 1) {
+				if (input.length() == 1) {
 					System.out.println("Secret word: " + gameManager.getGameState().getSecretWord());
 					ArrayList<Integer> matchedIndices = gameManager.guessLetter(input.charAt(0));
 					// If our guess is incorrect
-					if(matchedIndices.size() == 0) {
+					if (matchedIndices.size() == 0) {
 						System.out.println("Incorrect Letter: " + input);
 						frame.addWrongChar(input.charAt(0));
 						frame.addBodyPart(); // makes a body part visible
@@ -77,8 +78,7 @@ public class MainDisplay extends JFrame {
 				}
 				frame.hasNewInput = false;
 			}
-			
-			
+
 		}
 	}
 
@@ -110,13 +110,11 @@ public class MainDisplay extends JFrame {
 
 		// input button
 		inputButton.setBounds(740, 75, 90, 39);
-		inputButton.addActionListener(new ActionListener()
-		{
-			  public void actionPerformed(ActionEvent e)
-			  {
-				  hasNewInput = true;
-			  }
-			});
+		inputButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				hasNewInput = true;
+			}
+		});
 		contentPane.add(inputButton);
 
 		// wrongWordsBank
@@ -134,7 +132,8 @@ public class MainDisplay extends JFrame {
 		contentPane.add(lblWrongGuesses);
 
 		// secret word and info on the guess
-		// ex: if choose a previously guessed letter then display "you have already guessed  this letter"
+		// ex: if choose a previously guessed letter then display "you have already
+		// guessed this letter"
 		JTextField textField_2 = new JTextField();
 		textField_2.setEditable(false);
 		textField_2.setBounds(431, 361, 319, 26);
@@ -145,63 +144,58 @@ public class MainDisplay extends JFrame {
 		contentPane.add(graphicsPanel);
 
 	}
-	
+
 	public String getInput() {
 		return inputField.getText();
 	}
-	
+
 	public void addWrongChar(char c) {
-		wrongWordsBank.setText(wrongWordsBank.getText()+c+", ");
+		wrongWordsBank.setText(wrongWordsBank.getText() + c + ", ");
 	}
-	
+
 	public void addBodyPart() {
 		visibleParts[currentPartIndex++] = true;
 	}
-	
+
 	class MyPanel extends JPanel {
-		
+
 		public void paintComponent(Graphics g) {
 			super.paintComponent(g);
-			Graphics2D g2d = (Graphics2D)g;
+			Graphics2D g2d = (Graphics2D) g;
 			g2d.setColor(Color.black);
-			if(visibleParts[0]) {
+			if (visibleParts[0]) {
 				g2d.fillOval(150, 10, 50, 50);
 			}
-			if(visibleParts[1]) {
+			if (visibleParts[1]) {
 				g2d.fillRect(170, 20, 10, 200);
 			}
-			if(visibleParts[2]) {
+			if (visibleParts[2]) {
 				g2d.fillRect(70, 100, 100, 10);
 			}
-			if(visibleParts[3]) {
+			if (visibleParts[3]) {
 				g2d.fillRect(170, 100, 100, 10);
 			}
-			if(visibleParts[4]) {
+			if (visibleParts[4]) {
 				g2d.fillRect(70, 220, 100, 10);
 			}
-			if(visibleParts[5]) {
-				
-				
+			if (visibleParts[5]) {
+
 				g2d.fillRect(170, 220, 100, 10);
-				
+
 				g2d.fillRect(0, 0, this.getWidth(), this.getHeight());
 				g2d.setFont(new Font("Tahoma", Font.BOLD, 29));
-				for(int i = 0; i < 100; i++) {
-					g2d.setColor(Color.RED);
-					g2d.drawString("YOU LOSE", this.getWidth() / 6, this.getHeight() / 6);
-					
-					g2d.setColor(Color.BLUE);
-					g2d.drawString("YOU LOSE", this.getWidth() / 2, this.getHeight() / 2);
-				
-					g2d.setColor(Color.WHITE);
-					g2d.drawString("YOU LOSE", this.getWidth() / 4, this.getHeight() / 4);
-				}
-				
+				g2d.setColor(Color.RED);
+				g2d.drawString("YOU LOSE", this.getWidth() / 6, this.getHeight() / 6);
+
+				g2d.setColor(Color.BLUE);
+				g2d.drawString("YOU LOSE", this.getWidth() / 2, this.getHeight() / 2);
+
+				g2d.setColor(Color.WHITE);
+				g2d.drawString("YOU LOSE", this.getWidth() / 4, this.getHeight() / 4);
+
 			}
 		}
 
 	}
 
-	
 }
-
