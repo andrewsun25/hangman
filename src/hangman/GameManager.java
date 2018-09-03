@@ -165,6 +165,7 @@ public class GameManager {
 				System.out.print("You have already guessed this letter, please try again.");
 				return Result.DUPLICATE;
 			}
+			
 			String secretWord = gameState.getSecretWord().toLowerCase(); // Convert to lower case
 			int index = secretWord.indexOf(guess);
 			
