@@ -39,7 +39,7 @@ public class MainDisplay extends JFrame {
 	private JPanel graphicsPanel = new MyPanel(); // MyPanel Object
 	private JButton btnSaveLoad = new JButton("Save / Load");
 	public boolean hasNewInput = false;
-
+	public boolean didWin = false;
 	private int currentPartIndex = 0;
 	// visibleParts represent the 6 body parts which can be visible (in order of
 	// head, body, left arm, right arm, left leg, right leg).
@@ -72,7 +72,11 @@ public class MainDisplay extends JFrame {
 				{
 					System.out.println("Secret word: " + gameManager.getGameState().getSecretWord());
 					GameManager.Result result = gameManager.guessLetter(input.charAt(0));
+					if (gameManager.didWin()) {
+						frame.didWin = true;
+					}
 					// If our guess is incorrect
+
 					if (result == GameManager.Result.WRONG) 
 					{
 						System.out.println("Incorrect Letter: " + input);
@@ -128,6 +132,7 @@ public class MainDisplay extends JFrame {
 		inputButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				hasNewInput = true;
+				inputField.setText("");
 			}
 		});
 		contentPane.add(inputButton);
@@ -150,7 +155,8 @@ public class MainDisplay extends JFrame {
 		// ex: if choose a previously guessed letter then display "you have already guessed this letter"
 		// guessed this letter"
 		wordStateBox.setEditable(false);
-		wordStateBox.setBounds(431, 361, 319, 26);
+		wordStateBox.setFont(new Font("Tahoma", Font.BOLD, 29));
+		wordStateBox.setBounds(431, 361, 600, 50);
 		contentPane.add(wordStateBox);
 		wordStateBox.setColumns(10);
 
@@ -194,6 +200,21 @@ public class MainDisplay extends JFrame {
 			super.paintComponent(g);
 			Graphics2D g2d = (Graphics2D) g;
 			g2d.setColor(Color.black);
+			if(didWin) {
+				g2d.fillRect(170, 220, 100, 10);
+
+				g2d.fillRect(0, 0, this.getWidth(), this.getHeight());
+				g2d.setFont(new Font("Tahoma", Font.BOLD, 29));
+				g2d.setColor(Color.RED);
+				g2d.drawString("YOU WIN", this.getWidth() / 6, this.getHeight() / 6);
+
+				g2d.setColor(Color.BLUE);
+				g2d.drawString("YOU WIN", this.getWidth() / 2, this.getHeight() / 2);
+
+				g2d.setColor(Color.WHITE);
+				g2d.drawString("YOU WIN", this.getWidth() / 4, this.getHeight() / 4);
+				return;
+			}
 			if (visibleParts[0]) {
 				g2d.fillOval(150, 10, 50, 50);
 			}
