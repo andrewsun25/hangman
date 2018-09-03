@@ -20,6 +20,13 @@ public class GameManager {
 	private String wordListPath = "word_list.txt";
 	private ArrayList<String> wordList;
 	private GameState gameState;
+	public enum Result
+	{
+		GAME_OVER,
+		WRONG,
+		CORRECT,
+		DUPLICATE
+	}
 	
 	/**
 	 * Initializes a new GameManager object.
@@ -145,19 +152,18 @@ public class GameManager {
 	/**
 	 * Guess a letter and update the game state.
 	 * @param guess The letter to guess
-	 * @return An array list of indexes where the letter matched in the secret word. A size of 0 means no matches were found.
+	 * @return The result of the guess.
 	 */
-	public ArrayList<Integer> guessLetter(char guess)
+	public Result guessLetter(char guess)
 	{
-		ArrayList<Integer> indexList = new ArrayList<Integer>();
+		//ArrayList<Integer> indexList = new ArrayList<Integer>();
+		Result result = Result.GAME_OVER;
 		guess = Character.toLowerCase(guess); // Convert to lower case
 		if (isGameOver() == false)
 		{
-		
-		
 			if (!gameState.addGuessedLetter(guess)) {
 				System.out.print("You have already guessed this letter, please try again.");
-				return indexList;
+				return Result.DUPLICATE;
 			}
 			String secretWord = gameState.getSecretWord().toLowerCase(); // Convert to lower case
 			int index = secretWord.indexOf(guess);
@@ -166,11 +172,13 @@ public class GameManager {
 			if (index < 0)
 			{
 				gameState.incrementNumWrongGuesses();
+				result = Result.WRONG;
 			}
 			else // Right guess, see how many matches there are
 			{		
 				// Increase the correct guess count (only do this once)
 				gameState.incrementNumCorrectGuesses();
+				result = Result.CORRECT;
 				
 				while (index >= 0) 
 				{
@@ -178,7 +186,7 @@ public class GameManager {
 					gameState.setLetter(index, guess);
 					
 					// Add this index to the list to return
-					indexList.add(index);
+					//indexList.add(index);
 					
 					// Get the next occurrence of this guess (if any)
 					index = secretWord.indexOf(guess, index + 1);
@@ -190,7 +198,7 @@ public class GameManager {
 			System.out.println("The game is over!");
 		}
 		
-		return indexList;
+		return result;
 	}
 	
 	

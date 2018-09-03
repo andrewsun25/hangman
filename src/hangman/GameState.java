@@ -98,12 +98,9 @@ public class GameState implements java.io.Serializable {
 	 * Adds a new letter as a guess.
 	 * @param letter The letter that has been guessed.
 	 */
-	public boolean addGuessedLetter(Character letter)
-	{
-		
-		return guessedLetters.add(letter); 
-//		return false;
-		
+	boolean addGuessedLetter(Character letter)
+	{		
+		return guessedLetters.add(letter); 		
 	}
 	
 	/**

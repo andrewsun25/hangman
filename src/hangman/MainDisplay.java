@@ -66,18 +66,28 @@ public class MainDisplay extends JFrame {
 			// Whenever the user presses the input button, frame.hasNewInput becomes true.
 			if (frame.hasNewInput) {
 				String input = frame.getInput();
-				if (input.length() == 1) {
+				if (input.length() == 1) 
+				{
 					System.out.println("Secret word: " + gameManager.getGameState().getSecretWord());
-					ArrayList<Integer> matchedIndices = gameManager.guessLetter(input.charAt(0));
+					GameManager.Result result = gameManager.guessLetter(input.charAt(0));
 					// If our guess is incorrect
-					if (matchedIndices.size() == 0) {
+					if (result == GameManager.Result.WRONG) 
+					{
 						System.out.println("Incorrect Letter: " + input);
-						if (gameState.addGuessedLetter(char guess)) {
 						frame.addWrongChar(input.charAt(0));
-						}
 						frame.addBodyPart(); // makes a body part visible
-						frame.graphicsPanel.repaint();
 					}
+					else if (result == GameManager.Result.CORRECT)
+					{
+						// TODO: Display correct letters
+					}
+					else if (result == GameManager.Result.DUPLICATE)
+					{
+						// TODO: Something?
+					}
+					
+					// Repaint the GUI for any updates
+					frame.graphicsPanel.repaint();
 				}
 				frame.hasNewInput = false;
 			}

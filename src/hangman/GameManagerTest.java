@@ -138,10 +138,10 @@ class GameManagerTest {
 		gm.getGameState().setSecretWord("engineering");
 		
 		// Guess an incorrect letter
-		ArrayList<Integer> temp = gm.guessLetter('x');
+		GameManager.Result result = gm.guessLetter('x');
 		
 		// Test that the ArrayLIst returned was empty
-		assertEquals(0, temp.size());
+		assertEquals(GameManager.Result.WRONG, result);
 		
 		// Test that the incorrect number of wrong guesses was incremented
 		assertEquals(1, gm.getGameState().getNumWrongGuesses());
@@ -163,15 +163,10 @@ class GameManagerTest {
 		gm.getGameState().setSecretWord("engineering");
 		
 		// Guess an correct letter
-		ArrayList<Integer> temp = gm.guessLetter('e');
+		GameManager.Result result = gm.guessLetter('e');
 		
 		// Test that the ArrayList returned 3 hits
-		assertEquals(3, temp.size());
-		
-		// Test that the ArrayList contains indexes 0, 5, and 6
-		assertTrue(temp.contains(0));
-		assertTrue(temp.contains(5));
-		assertTrue(temp.contains(6));
+		assertEquals(GameManager.Result.CORRECT, result);
 		
 		// Test that the incorrect number of wrong guesses is still 0
 		assertEquals(0, gm.getGameState().getNumWrongGuesses());
