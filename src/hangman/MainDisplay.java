@@ -234,7 +234,7 @@ public class MainDisplay extends JFrame {
 		wordStateBox.setColumns(10);
 
 		graphicsPanel.setBounds(35, 16, 367, 377);
-		contentPane.add(graphicsPanel);
+		contentPane.add(graphicsPanel); 
 		
 		JButton btnNewButton = new JButton("");
 		try {
