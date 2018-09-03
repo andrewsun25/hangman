@@ -1,6 +1,7 @@
 package hangman;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 
 /**
  * Class object to hold all data related to a game of hangman.
@@ -15,7 +16,7 @@ public class GameState implements java.io.Serializable {
 	public static final transient char NULL_CHAR = '\u0000';
 	private String secretWord;
 	private char[] secretWordArray; // To be filled by correct letter guesses
-	private ArrayList<Character> guessedLetters;
+	private HashSet<Character> guessedLetters;
 	private int numWrongGuesses;
 	private int numCorrectGuesses;
 	
@@ -44,7 +45,8 @@ public class GameState implements java.io.Serializable {
 	{
 		secretWord = word;
 		secretWordArray = new char[secretWord.length()];
-		guessedLetters = new ArrayList<Character>();
+		//guessedLetters = new ArrayList<Character>();
+		guessedLetters = new HashSet<Character>();
 		numWrongGuesses = 0;
 		numCorrectGuesses = 0;
 	}
@@ -87,7 +89,7 @@ public class GameState implements java.io.Serializable {
 	 * Returns a list of characters that have been guessed in this game.
 	 * @return A list of characters that have been guessed so far.
 	 */
-	public ArrayList<Character> getGuessedLetters()
+	public HashSet<Character> getGuessedLetters()
 	{
 		return guessedLetters;
 	}
@@ -96,9 +98,12 @@ public class GameState implements java.io.Serializable {
 	 * Adds a new letter as a guess.
 	 * @param letter The letter that has been guessed.
 	 */
-	public void addGuessedLetter(char letter)
+	public boolean addGuessedLetter(Character letter)
 	{
-		guessedLetters.add(letter);
+		
+		return guessedLetters.add(letter); 
+//		return false;
+		
 	}
 	
 	/**
@@ -163,12 +168,16 @@ public class GameState implements java.io.Serializable {
 	    }
 	    
 	    // Check that each guessed letter is the same
-	    for (int i=0; i<gs.guessedLetters.size(); i++)
-	    {
-	    	if (!gs.guessedLetters.get(i).equals(this.guessedLetters.get(i)))
-	    	{
-	    		return false;
-	    	}
+//	    for (int i=0; i<gs.guessedLetters.size(); i++)
+//	    {
+//	    	if (!gs.guessedLetters.get(i).equals(this.guessedLetters.get(i)))
+//	    	{
+//	    		return false;
+//	    	}
+//	    }
+	    
+	    if (!gs.guessedLetters.equals(this.guessedLetters)) {
+	    	return false;
 	    }
 	    
 	    // Check that the number of wrong guesses match

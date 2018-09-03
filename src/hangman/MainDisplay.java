@@ -26,6 +26,7 @@ import javax.swing.border.LineBorder;
 import javax.swing.JEditorPane;
 
 import hangman.GameManager;
+import hangman.GameState;
 
 public class MainDisplay extends JFrame {
 
@@ -71,7 +72,9 @@ public class MainDisplay extends JFrame {
 					// If our guess is incorrect
 					if (matchedIndices.size() == 0) {
 						System.out.println("Incorrect Letter: " + input);
+						if (gameState.addGuessedLetter(char guess)) {
 						frame.addWrongChar(input.charAt(0));
+						}
 						frame.addBodyPart(); // makes a body part visible
 						frame.graphicsPanel.repaint();
 					}
@@ -132,7 +135,7 @@ public class MainDisplay extends JFrame {
 		contentPane.add(lblWrongGuesses);
 
 		// secret word and info on the guess
-		// ex: if choose a previously guessed letter then display "you have already
+		// ex: if choose a previously guessed letter then display "you have already guessed this letter"
 		// guessed this letter"
 		JTextField textField_2 = new JTextField();
 		textField_2.setEditable(false);
@@ -150,6 +153,7 @@ public class MainDisplay extends JFrame {
 	}
 
 	public void addWrongChar(char c) {
+		
 		wrongWordsBank.setText(wrongWordsBank.getText() + c + ", ");
 	}
 
@@ -197,5 +201,5 @@ public class MainDisplay extends JFrame {
 		}
 
 	}
-
 }
+

@@ -7,6 +7,7 @@ import java.io.FileReader;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Random;
 
 /**
@@ -152,7 +153,12 @@ public class GameManager {
 		guess = Character.toLowerCase(guess); // Convert to lower case
 		if (isGameOver() == false)
 		{
-			gameState.addGuessedLetter(guess);
+		
+		
+			if (!gameState.addGuessedLetter(guess)) {
+				System.out.print("You have already guessed this letter, please try again.");
+				return indexList;
+			}
 			String secretWord = gameState.getSecretWord().toLowerCase(); // Convert to lower case
 			int index = secretWord.indexOf(guess);
 			
@@ -186,6 +192,7 @@ public class GameManager {
 		
 		return indexList;
 	}
+	
 	
 	/**
 	 * Gets whether the game is over or not.
