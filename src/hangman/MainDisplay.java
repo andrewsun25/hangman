@@ -106,6 +106,7 @@ public class MainDisplay extends JFrame {
 	/**
 	 * Create the frame.
 	 */
+
 	public MainDisplay() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 900, 465);
@@ -175,19 +176,31 @@ public class MainDisplay extends JFrame {
 
 	}
 
+	/** Get the current text in the input field
+	 * @return: The current text in the input field.
+	 */
 	public String getInput() {
 		return inputField.getText();
 	}
 
+	/** Adds a wrong letter to the wrongWordsBank 
+	 * @param c: The wrong character to add
+	 */
 	public void addWrongChar(char c) {
 		
 		wrongWordsBank.setText(wrongWordsBank.getText() + c + ", ");
 	}
 
+	/** Adds a body part to hangman.
+	 * 
+	 */
 	public void addBodyPart() {
 		visibleParts[currentPartIndex++] = true;
 	}
 	
+	/** Update the wordStateBox GUI element depending on the state of the game.
+	 * @param wordState: The current characters which are correct.
+	 */
 	public void updateWordState(char[] wordState)
 	{
 		wordStateBox.setText("");
@@ -209,8 +222,15 @@ public class MainDisplay extends JFrame {
 		
 	}
 
+	/**
+	 * @author Andrew
+	 * Class for managing the display of hangman and the victory/defeat screens.
+	 */
 	class MyPanel extends JPanel {
 
+		/* (non-Javadoc)
+		 * @see javax.swing.JComponent#paintComponent(java.awt.Graphics)
+		 */
 		public void paintComponent(Graphics g) {
 			super.paintComponent(g);
 			Graphics2D g2d = (Graphics2D) g;
