@@ -34,6 +34,7 @@ public class MainDisplay extends JFrame {
 	private JTextField inputField = new JTextField();
 	private JButton inputButton = new JButton("Guess");
 	private JTextField wrongWordsBank = new JTextField();
+	private JTextField wordStateBox = new JTextField();
 //	private JTextField textField_2 = new JTextField();
 	private JPanel graphicsPanel = new MyPanel(); // MyPanel Object
 	private JButton btnSaveLoad = new JButton("Save / Load");
@@ -62,6 +63,7 @@ public class MainDisplay extends JFrame {
 		});
 
 		GameManager gameManager = new GameManager();
+		frame.updateWordState(gameManager.getGameState().getWordState());
 		while (!gameManager.isGameOver()) {
 			// Whenever the user presses the input button, frame.hasNewInput becomes true.
 			if (frame.hasNewInput) {
@@ -79,7 +81,7 @@ public class MainDisplay extends JFrame {
 					}
 					else if (result == GameManager.Result.CORRECT)
 					{
-						// TODO: Display correct letters
+						frame.updateWordState(gameManager.getGameState().getWordState());
 					}
 					else if (result == GameManager.Result.DUPLICATE)
 					{
@@ -147,11 +149,10 @@ public class MainDisplay extends JFrame {
 		// secret word and info on the guess
 		// ex: if choose a previously guessed letter then display "you have already guessed this letter"
 		// guessed this letter"
-		JTextField textField_2 = new JTextField();
-		textField_2.setEditable(false);
-		textField_2.setBounds(431, 361, 319, 26);
-		contentPane.add(textField_2);
-		textField_2.setColumns(10);
+		wordStateBox.setEditable(false);
+		wordStateBox.setBounds(431, 361, 319, 26);
+		contentPane.add(wordStateBox);
+		wordStateBox.setColumns(10);
 
 		graphicsPanel.setBounds(35, 16, 367, 377);
 		contentPane.add(graphicsPanel);
@@ -169,6 +170,22 @@ public class MainDisplay extends JFrame {
 
 	public void addBodyPart() {
 		visibleParts[currentPartIndex++] = true;
+	}
+	
+	public void updateWordState(char[] wordState)
+	{
+		wordStateBox.setText("");
+		for (int i=0; i<wordState.length; i++)
+		{
+			if (wordState[i] == GameState.NULL_CHAR) // if blank
+			{
+				wordStateBox.setText(wordStateBox.getText() + "_" + " ");
+			}
+			else // there is a letter
+			{
+				wordStateBox.setText(wordStateBox.getText() + wordState[i] + " ");
+			}
+		}
 	}
 
 	class MyPanel extends JPanel {
