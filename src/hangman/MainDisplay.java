@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Graphics;
 import java.awt.EventQueue;
 import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.geom.Line2D;
@@ -14,6 +15,8 @@ import javax.swing.SwingUtilities;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
@@ -172,6 +175,22 @@ public class MainDisplay extends JFrame {
 
 		graphicsPanel.setBounds(35, 16, 367, 377);
 		contentPane.add(graphicsPanel);
+		
+		JButton btnNewButton = new JButton("");
+		try {
+			Image img = ImageIO.read(getClass().getResource("joker_pic.png"));
+			
+			btnNewButton.setIcon(new ImageIcon(img));
+		} catch (Exception p) {
+			System.out.println(p);
+		}
+		
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			}
+		});
+		btnNewButton.setBounds(234, 316, 200, 200);
+		contentPane.add(btnNewButton);
 
 	}
 
