@@ -189,7 +189,7 @@ public class MainDisplay extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 			}
 		});
-		btnNewButton.setBounds(234, 316, 200, 200);
+		btnNewButton.setBounds(750, 186, 128, 131);
 		contentPane.add(btnNewButton);
 
 	}
