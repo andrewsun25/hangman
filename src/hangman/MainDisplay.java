@@ -354,7 +354,7 @@ public class MainDisplay extends JFrame {
 
 				g2d.setColor(Color.WHITE);
 				g2d.drawString("YOU LOSE", this.getWidth() / 4, this.getHeight() / 4);
-
+				g2d.drawString("SecreWord: "+MainDisplay.gameManager.getGameState().getSecretWord(), 0, this.getHeight() - 100);
 			}
 		}
 
