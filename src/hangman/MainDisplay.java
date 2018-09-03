@@ -37,13 +37,16 @@ public class MainDisplay extends JFrame {
 	private JTextField wordStateBox = new JTextField();
 //	private JTextField textField_2 = new JTextField();
 	private JPanel graphicsPanel = new MyPanel(); // MyPanel Object
-	private JButton btnSaveLoad = new JButton("Save / Load");
+	private JButton btnSave = new JButton("Save");
+	private JButton btnLoad = new JButton("Load");
 	public boolean hasNewInput = false;
 	public boolean didWin = false;
 	private int currentPartIndex = 0;
 	// visibleParts represent the 6 body parts which can be visible (in order of
 	// head, body, left arm, right arm, left leg, right leg).
 	private boolean[] visibleParts = new boolean[] { false, false, false, false, false, false };
+	
+	private static GameManager gameManager = new GameManager();
 
 	/**
 	 * Launch the application.
@@ -62,7 +65,6 @@ public class MainDisplay extends JFrame {
 			}
 		});
 
-		GameManager gameManager = new GameManager();
 		frame.updateWordState(gameManager.getGameState().getWordState());
 		while (!gameManager.isGameOver()) {
 			// Whenever the user presses the input button, frame.hasNewInput becomes true.
@@ -111,8 +113,16 @@ public class MainDisplay extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
-		btnSaveLoad.setBounds(648, 16, 115, 29);
-		contentPane.add(btnSaveLoad);
+		btnLoad.setBounds(530, 16, 115, 29);
+		btnLoad.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				loadGame();
+			}
+		});
+		contentPane.add(btnLoad);
+		
+		btnSave.setBounds(648, 16, 115, 29);
+		contentPane.add(btnSave);
 
 		JLabel lblYourGuess = new JLabel("Your Guess");
 		lblYourGuess.setFont(new Font("Tahoma", Font.PLAIN, 23));
@@ -192,6 +202,11 @@ public class MainDisplay extends JFrame {
 				wordStateBox.setText(wordStateBox.getText() + wordState[i] + " ");
 			}
 		}
+	}
+	
+	public void loadGame()
+	{
+		
 	}
 
 	class MyPanel extends JPanel {
