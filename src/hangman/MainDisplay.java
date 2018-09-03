@@ -127,7 +127,6 @@ public class MainDisplay extends JFrame {
 			if (frame.hasNewInput) 
 			{
 				String input = frame.getInput();
-				System.out.println("Trying to use input " + input);
 				if (input.length() == 1) 
 				{
 					System.out.println("Secret word: " + gameManager.getGameState().getSecretWord());
@@ -266,7 +265,6 @@ public class MainDisplay extends JFrame {
 	}
 
 	public String getInput() {
-		System.out.println("Returning frame input value of " + frameInput);
 		return frameInput;
 	}
 
