@@ -10,6 +10,7 @@ import java.awt.event.ActionListener;
 import java.awt.geom.Line2D;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Random;
 
 import javax.swing.SwingUtilities;
 
@@ -51,6 +52,7 @@ public class MainDisplay extends JFrame {
 	public boolean saveGame = false;
 	public boolean didWin = false;
 	private int currentPartIndex = 0;
+	private int numFreeLetters = 1;
 	// visibleParts represent the 6 body parts which can be visible (in order of
 	// head, body, left arm, right arm, left leg, right leg).
 	private boolean[] visibleParts = new boolean[] { false, false, false, false, false, false };
@@ -239,14 +241,23 @@ public class MainDisplay extends JFrame {
 		JButton btnNewButton = new JButton("");
 		try {
 			Image img = ImageIO.read(getClass().getResource("joker_pic.png"));
-			
 			btnNewButton.setIcon(new ImageIcon(img));
 		} catch (Exception p) {
 			System.out.println(p);
 		}
 		
 		btnNewButton.addActionListener(new ActionListener() {
+			
+			
 			public void actionPerformed(ActionEvent arg0) {
+				if (numFreeLetters > 0) {
+				numFreeLetters--;
+			  String SecretWord	= gameManager.getGameState().getSecretWord();
+			  Random random = new Random();
+			  int secretValue = random.nextInt(SecretWord.length()-1);
+			  gameManager.guessLetter(SecretWord.charAt(secretValue));
+			  updateWordState(gameManager.getGameState().getWordState());
+				}
 			}
 		});
 		btnNewButton.setBounds(750, 186, 128, 131);
