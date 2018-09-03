@@ -9,6 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.geom.Line2D;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import javax.swing.SwingUtilities;
 
@@ -26,7 +27,9 @@ import java.awt.Color;
 import javax.swing.JSeparator;
 import javax.swing.JSplitPane;
 import javax.swing.border.LineBorder;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.JEditorPane;
+import javax.swing.JFileChooser;
 
 import hangman.GameManager;
 import hangman.GameState;
@@ -42,7 +45,10 @@ public class MainDisplay extends JFrame {
 	private JPanel graphicsPanel = new MyPanel(); // MyPanel Object
 	private JButton btnSave = new JButton("Save");
 	private JButton btnLoad = new JButton("Load");
+	public String frameInput = "";
 	public boolean hasNewInput = false;
+	public boolean loadGame = false;
+	public boolean saveGame = false;
 	public boolean didWin = false;
 	private int currentPartIndex = 0;
 	// visibleParts represent the 6 body parts which can be visible (in order of
@@ -69,10 +75,57 @@ public class MainDisplay extends JFrame {
 		});
 
 		frame.updateWordState(gameManager.getGameState().getWordState());
-		while (!gameManager.isGameOver()) {
+		while (!gameManager.isGameOver()) 
+		{
+			if (frame.loadGame)
+			{
+				JFileChooser chooser = new JFileChooser();
+		        FileNameExtensionFilter filter = new FileNameExtensionFilter("Hangman Game File", "hangman");
+		        chooser.setFileFilter(filter);
+		        int returnVal = chooser.showOpenDialog(null);
+		        if(returnVal == JFileChooser.APPROVE_OPTION) 
+		        {
+		        	gameManager.loadGame(chooser.getSelectedFile().getAbsolutePath());
+		        	String secretWord = gameManager.getGameState().getSecretWord();
+		        	
+		        	// Update wrong guesses box and body parts
+		        	Iterator<Character> it = gameManager.getGameState().getGuessedLetters().iterator();
+		            while(it.hasNext())
+		            {
+		               char guess = it.next();
+		               if (secretWord.indexOf(guess) < 0)
+		               {
+		            	   frame.addWrongChar(guess);
+		            	   frame.addBodyPart(); // makes a body part visible
+		               }
+		            }
+		        	
+		        	// Update word state box
+		        	frame.updateWordState(gameManager.getGameState().getWordState());
+		        }
+		        
+		        frame.loadGame = false;
+		        // Repaint the GUI for any updates
+				frame.graphicsPanel.repaint();
+			}
+			if (frame.saveGame)
+			{
+				JFileChooser chooser = new JFileChooser();
+		        FileNameExtensionFilter filter = new FileNameExtensionFilter("Hangman Game File", "hangman");
+		        chooser.setFileFilter(filter);
+		        int returnVal = chooser.showSaveDialog(null);
+		        if(returnVal == JFileChooser.APPROVE_OPTION) 
+		        {
+		        	String filePath = chooser.getSelectedFile().getAbsolutePath();
+		        	gameManager.saveAs(filePath);
+		        }
+		        frame.saveGame = false;
+			}
 			// Whenever the user presses the input button, frame.hasNewInput becomes true.
-			if (frame.hasNewInput) {
+			if (frame.hasNewInput) 
+			{
 				String input = frame.getInput();
+				System.out.println("Trying to use input " + input);
 				if (input.length() == 1) 
 				{
 					System.out.println("Secret word: " + gameManager.getGameState().getSecretWord());
@@ -120,12 +173,17 @@ public class MainDisplay extends JFrame {
 		btnLoad.setBounds(530, 16, 115, 29);
 		btnLoad.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				loadGame();
+				loadGame = true;
 			}
 		});
 		contentPane.add(btnLoad);
 		
 		btnSave.setBounds(648, 16, 115, 29);
+		btnSave.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				saveGame = true;
+			}
+		});
 		contentPane.add(btnSave);
 
 		JLabel lblYourGuess = new JLabel("Your Guess");
@@ -145,8 +203,10 @@ public class MainDisplay extends JFrame {
 		inputButton.setBounds(740, 75, 90, 39);
 		inputButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				hasNewInput = true;
+				frameInput = inputField.getText();
 				inputField.setText("");
+				hasNewInput = true; // Because of the while loop in main this must be set AFTER we set the frameInput variable
+				
 			}
 		});
 		contentPane.add(inputButton);
@@ -199,7 +259,8 @@ public class MainDisplay extends JFrame {
 	 * @return: The current text in the input field.
 	 */
 	public String getInput() {
-		return inputField.getText();
+		System.out.println("Returning frame input value of " + frameInput);
+		return frameInput;
 	}
 
 	/** Adds a wrong letter to the wrongWordsBank 
@@ -234,11 +295,6 @@ public class MainDisplay extends JFrame {
 				wordStateBox.setText(wordStateBox.getText() + wordState[i] + " ");
 			}
 		}
-	}
-	
-	public void loadGame()
-	{
-		
 	}
 
 	/**
