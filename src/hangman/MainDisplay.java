@@ -238,6 +238,7 @@ public class MainDisplay extends JFrame {
 		contentPane.add(graphicsPanel); 
 		
 		JButton btnNewButton = new JButton("");
+		btnNewButton.setToolTipText("Click to reveal one random letter in the word");
 		try {
 			Image img = ImageIO.read(getClass().getResource("joker_pic.png"));
 			btnNewButton.setIcon(new ImageIcon(img));
@@ -256,6 +257,7 @@ public class MainDisplay extends JFrame {
 			  int secretValue = random.nextInt(SecretWord.length()-1);
 			  gameManager.guessLetter(SecretWord.charAt(secretValue));
 			  updateWordState(gameManager.getGameState().getWordState());
+			  btnNewButton.setEnabled(false);
 				}
 			}
 		});
